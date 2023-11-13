@@ -5,9 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/ryangjchandler/filament-passwordless-login/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/ryangjchandler/filament-passwordless-login/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/ryangjchandler/filament-passwordless-login.svg?style=flat-square)](https://packagist.org/packages/ryangjchandler/filament-passwordless-login)
 
-
-
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+This package provides a new Login component that replaces the traditional email and password form with a simple passwordless login form.
 
 ## Installation
 
@@ -17,38 +15,28 @@ You can install the package via composer:
 composer require ryangjchandler/filament-passwordless-login
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="filament-passwordless-login-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="filament-passwordless-login-config"
-```
-
 Optionally, you can publish the views using
 
 ```bash
 php artisan vendor:publish --tag="filament-passwordless-login-views"
 ```
 
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
 ## Usage
 
+Register the plugin on your Filament panel.
+
 ```php
-$passwordlessLogin = new RyanChandler\PasswordlessLogin();
-echo $passwordlessLogin->echoPhrase('Hello, RyanChandler!');
+use RyanChandler\PasswordlessLogin\PasswordlessLoginPlugin;
+
+public function panel(Panel $panel): Panel
+{
+    return $panel
+        ->//...
+        ->plugin(PasswordlessLoginPlugin::make());
+}
 ```
+
+This will automatically register the new login page, overwriting the one provided by Filament. It also registers the necessary routes to authenticate users using a magic login link.
 
 ## Testing
 

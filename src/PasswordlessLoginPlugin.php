@@ -4,6 +4,10 @@ namespace RyanChandler\PasswordlessLogin;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Illuminate\Support\Facades\Route;
+use RyanChandler\PasswordlessLogin\Http\Controllers\LoginLinkController;
+use RyanChandler\PasswordlessLogin\Mail\LoginLink;
+use RyanChandler\PasswordlessLogin\Pages\Login;
 
 class PasswordlessLoginPlugin implements Plugin
 {
@@ -14,7 +18,13 @@ class PasswordlessLoginPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        //
+        $panel
+            ->login(Login::class)
+            ->routes(function () {
+                Route::get('/auth/{user}/link', LoginLinkController::class)
+                    ->middleware(['signed', 'guest'])
+                    ->name('auth.link');
+            });
     }
 
     public function boot(Panel $panel): void
