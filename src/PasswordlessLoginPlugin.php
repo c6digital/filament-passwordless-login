@@ -6,7 +6,6 @@ use Filament\Contracts\Plugin;
 use Filament\Panel;
 use Illuminate\Support\Facades\Route;
 use RyanChandler\PasswordlessLogin\Http\Controllers\LoginLinkController;
-use RyanChandler\PasswordlessLogin\Mail\LoginLink;
 use RyanChandler\PasswordlessLogin\Pages\Login;
 
 class PasswordlessLoginPlugin implements Plugin

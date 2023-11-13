@@ -13,11 +13,13 @@ use Illuminate\Support\Facades\URL;
 
 class LoginLink extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public function __construct(
         public User $user
-    ) {}
+    ) {
+    }
 
     public function envelope()
     {
