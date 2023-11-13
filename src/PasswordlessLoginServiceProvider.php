@@ -24,30 +24,7 @@ class PasswordlessLoginServiceProvider extends PackageServiceProvider
 
     public function configurePackage(Package $package): void
     {
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/spatie/laravel-package-tools
-         */
-        $package->name(static::$name)
-            ->hasCommands($this->getCommands())
-            ->hasInstallCommand(function (InstallCommand $command) {
-                $command
-                    ->publishConfigFile()
-                    ->publishMigrations()
-                    ->askToRunMigrations()
-                    ->askToStarRepoOnGitHub('ryangjchandler/filament-passwordless-login');
-            });
-
-        $configFileName = $package->shortName();
-
-        if (file_exists($package->basePath("/../config/{$configFileName}.php"))) {
-            $package->hasConfigFile();
-        }
-
-        if (file_exists($package->basePath('/../database/migrations'))) {
-            $package->hasMigrations($this->getMigrations());
-        }
+        $package->name(static::$name);
 
         if (file_exists($package->basePath('/../resources/lang'))) {
             $package->hasTranslations();
@@ -78,15 +55,6 @@ class PasswordlessLoginServiceProvider extends PackageServiceProvider
         // Icon Registration
         FilamentIcon::register($this->getIcons());
 
-        // Handle Stubs
-        if (app()->runningInConsole()) {
-            foreach (app(Filesystem::class)->files(__DIR__ . '/../stubs/') as $file) {
-                $this->publishes([
-                    $file->getRealPath() => base_path("stubs/filament-passwordless-login/{$file->getFilename()}"),
-                ], 'filament-passwordless-login-stubs');
-            }
-        }
-
         // Testing
         Testable::mixin(new TestsPasswordlessLogin());
     }
@@ -113,9 +81,7 @@ class PasswordlessLoginServiceProvider extends PackageServiceProvider
      */
     protected function getCommands(): array
     {
-        return [
-            PasswordlessLoginCommand::class,
-        ];
+        return [];
     }
 
     /**
@@ -147,8 +113,6 @@ class PasswordlessLoginServiceProvider extends PackageServiceProvider
      */
     protected function getMigrations(): array
     {
-        return [
-            'create_filament-passwordless-login_table',
-        ];
+        return [];
     }
 }
