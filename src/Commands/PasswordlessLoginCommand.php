@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace RyanChandler\PasswordlessLogin\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class PasswordlessLoginCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'filament-passwordless-login';
 
     public $description = 'My command';
 
