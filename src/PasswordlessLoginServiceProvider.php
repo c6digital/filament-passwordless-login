@@ -30,6 +30,10 @@ class PasswordlessLoginServiceProvider extends PackageServiceProvider
         if (file_exists($package->basePath('/../resources/views'))) {
             $package->hasViews(static::$viewNamespace);
         }
+
+        $package->hasCommands([
+            Commands\PasswordlessLinkCommand::class,
+        ]);
     }
 
     public function packageRegistered(): void
