@@ -3,13 +3,12 @@
 namespace C6Digital\PasswordlessLogin\Mail;
 
 use App\Models\User;
-use Filament\Facades\Filament;
+use C6Digital\PasswordlessLogin\Facades\PasswordlessLogin;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\URL;
 
 class LoginLink extends Mailable
 {
@@ -17,7 +16,7 @@ class LoginLink extends Mailable
     use SerializesModels;
 
     public function __construct(
-        public User $user
+        public User $user,
     ) {
     }
 
@@ -33,7 +32,7 @@ class LoginLink extends Mailable
         return new Content(
             markdown: 'filament-passwordless-login::mail.login-link',
             with: [
-                'url' => URL::temporarySignedRoute('filament.' . Filament::getCurrentPanel()->getId() . '.auth.link', now()->addMinutes(30), $this->user),
+                'url' => PasswordlessLogin::generateLoginLink($this->user),
             ]
         );
     }

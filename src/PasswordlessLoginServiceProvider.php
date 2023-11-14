@@ -3,6 +3,7 @@
 namespace C6Digital\PasswordlessLogin;
 
 use C6Digital\PasswordlessLogin\Facades\PasswordlessLogin;
+use C6Digital\PasswordlessLogin\Testing\TestsPasswordlessLogin;
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Assets\Css;
@@ -10,7 +11,6 @@ use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
 use Livewire\Features\SupportTesting\Testable;
-use C6Digital\PasswordlessLogin\Testing\TestsPasswordlessLogin;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 

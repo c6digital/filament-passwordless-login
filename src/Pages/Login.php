@@ -3,6 +3,7 @@
 namespace C6Digital\PasswordlessLogin\Pages;
 
 use App\Models\User;
+use C6Digital\PasswordlessLogin\Mail\LoginLink;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\Component;
@@ -12,7 +13,6 @@ use Filament\Notifications\Notification;
 use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Pages\SimplePage;
 use Illuminate\Support\Facades\Mail;
-use C6Digital\PasswordlessLogin\Mail\LoginLink;
 
 class Login extends SimplePage
 {
