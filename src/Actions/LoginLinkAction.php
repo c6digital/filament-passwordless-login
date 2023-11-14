@@ -38,8 +38,8 @@ class LoginLinkAction extends Action
                     }),
             ])
             ->modalFooterActionsAlignment(Alignment::Center)
-            ->modalSubmitAction(fn (User $user) =>
-                $this->makeModalAction('Copy')
+            ->modalSubmitAction(
+                fn (User $user) => $this->makeModalAction('Copy')
                     ->close(false)
                     ->color('info')
                     ->extraAttributes([
