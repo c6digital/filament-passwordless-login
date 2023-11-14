@@ -1,6 +1,6 @@
 <?php
 
-namespace RyanChandler\PasswordlessLogin\Tests;
+namespace C6Digital\PasswordlessLogin\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
@@ -18,17 +18,13 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
-use RyanChandler\PasswordlessLogin\PasswordlessLoginServiceProvider;
+use C6Digital\PasswordlessLogin\PasswordlessLoginServiceProvider;
 
 class TestCase extends Orchestra
 {
     protected function setUp(): void
     {
         parent::setUp();
-
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'RyanChandler\\PasswordlessLogin\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
-        );
     }
 
     protected function getPackageProviders($app)

@@ -1,6 +1,6 @@
 <?php
 
-namespace RyanChandler\PasswordlessLogin\Mail;
+namespace C6Digital\PasswordlessLogin\Mail;
 
 use App\Models\User;
 use Filament\Facades\Filament;

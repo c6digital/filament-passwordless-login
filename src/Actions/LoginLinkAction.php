@@ -1,6 +1,6 @@
 <?php
 
-namespace RyanChandler\PasswordlessLogin\Actions;
+namespace C6Digital\PasswordlessLogin\Actions;
 
 use App\Models\User;
 use Filament\Facades\Filament;

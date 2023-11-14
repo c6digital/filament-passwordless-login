@@ -1,5 +1,5 @@
 <?php
 
-use RyanChandler\PasswordlessLogin\Tests\TestCase;
+use C6Digital\PasswordlessLogin\Tests\TestCase;
 
 uses(TestCase::class)->in(__DIR__);

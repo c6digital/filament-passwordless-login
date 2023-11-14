@@ -1,6 +1,6 @@
 <?php
 
-namespace RyanChandler\PasswordlessLogin\Testing;
+namespace C6Digital\PasswordlessLogin\Testing;
 
 use Livewire\Features\SupportTesting\Testable;
 

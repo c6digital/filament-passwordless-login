@@ -1,6 +1,6 @@
 <?php
 
-namespace RyanChandler\PasswordlessLogin\Http\Controllers;
+namespace C6Digital\PasswordlessLogin\Http\Controllers;
 
 use App\Models\User;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;

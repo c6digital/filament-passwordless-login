@@ -26,7 +26,7 @@ php artisan vendor:publish --tag="filament-passwordless-login-views"
 Register the plugin on your Filament panel.
 
 ```php
-use RyanChandler\PasswordlessLogin\PasswordlessLoginPlugin;
+use C6Digital\PasswordlessLogin\PasswordlessLoginPlugin;
 
 public function panel(Panel $panel): Panel
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace RyanChandler\PasswordlessLogin;
+namespace C6Digital\PasswordlessLogin;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 use Illuminate\Support\Facades\Route;
-use RyanChandler\PasswordlessLogin\Http\Controllers\LoginLinkController;
-use RyanChandler\PasswordlessLogin\Pages\Login;
+use C6Digital\PasswordlessLogin\Http\Controllers\LoginLinkController;
+use C6Digital\PasswordlessLogin\Pages\Login;
 
 class PasswordlessLoginPlugin implements Plugin
 {

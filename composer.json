@@ -1,21 +1,22 @@
 {
-    "name": "ryangjchandler/filament-passwordless-login",
+    "name": "c6digital/filament-passwordless-login",
     "description": "Simple passwordless login for Filament.",
     "keywords": [
-        "ryangjchandler",
+        "c6digital",
         "laravel",
+        "filament",
         "filament-passwordless-login"
     ],
-    "homepage": "https://github.com/ryangjchandler/filament-passwordless-login",
+    "homepage": "https://github.com/c6digital/filament-passwordless-login",
     "support": {
-        "issues": "https://github.com/ryangjchandler/filament-passwordless-login/issues",
-        "source": "https://github.com/ryangjchandler/filament-passwordless-login"
+        "issues": "https://github.com/c6digital/filament-passwordless-login/issues",
+        "source": "https://github.com/c6digital/filament-passwordless-login"
     },
     "license": "MIT",
     "authors": [
         {
             "name": "Ryan Chandler",
-            "email": "support@ryangjchandler.co.uk",
+            "email": "ryan@c6digital.io",
             "role": "Developer"
         }
     ],
@@ -40,13 +41,12 @@
     },
     "autoload": {
         "psr-4": {
-            "RyanChandler\\PasswordlessLogin\\": "src/",
-            "RyanChandler\\PasswordlessLogin\\Database\\Factories\\": "database/factories/"
+            "C6Digital\\PasswordlessLogin\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "RyanChandler\\PasswordlessLogin\\Tests\\": "tests/"
+            "C6Digital\\PasswordlessLogin\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -66,11 +66,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "RyanChandler\\PasswordlessLogin\\PasswordlessLoginServiceProvider"
-            ],
-            "aliases": {
-                "PasswordlessLogin": "RyanChandler\\PasswordlessLogin\\Facades\\PasswordlessLogin"
-            }
+                "C6Digital\\PasswordlessLogin\\PasswordlessLoginServiceProvider"
+            ]
         }
     },
     "minimum-stability": "dev",

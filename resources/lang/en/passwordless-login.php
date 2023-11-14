@@ -1,6 +1,6 @@
 <?php
 
-// translations for RyanChandler/PasswordlessLogin
+// translations for C6Digital/PasswordlessLogin
 return [
     //
 ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace RyanChandler\PasswordlessLogin\Pages;
+namespace C6Digital\PasswordlessLogin\Pages;
 
 use App\Models\User;
 use Filament\Actions\Action;
@@ -12,7 +12,7 @@ use Filament\Notifications\Notification;
 use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Pages\SimplePage;
 use Illuminate\Support\Facades\Mail;
-use RyanChandler\PasswordlessLogin\Mail\LoginLink;
+use C6Digital\PasswordlessLogin\Mail\LoginLink;
 
 class Login extends SimplePage
 {

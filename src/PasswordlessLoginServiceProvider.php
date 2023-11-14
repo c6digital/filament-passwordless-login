@@ -1,7 +1,8 @@
 <?php
 
-namespace RyanChandler\PasswordlessLogin;
+namespace C6Digital\PasswordlessLogin;
 
+use C6Digital\PasswordlessLogin\Facades\PasswordlessLogin;
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Assets\Css;
@@ -9,7 +10,7 @@ use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
 use Livewire\Features\SupportTesting\Testable;
-use RyanChandler\PasswordlessLogin\Testing\TestsPasswordlessLogin;
+use C6Digital\PasswordlessLogin\Testing\TestsPasswordlessLogin;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -38,6 +39,7 @@ class PasswordlessLoginServiceProvider extends PackageServiceProvider
 
     public function packageRegistered(): void
     {
+        $this->app->singleton(PasswordlessLogin::class);
     }
 
     public function packageBooted(): void

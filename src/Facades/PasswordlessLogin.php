@@ -1,16 +1,18 @@
 <?php
 
-namespace RyanChandler\PasswordlessLogin\Facades;
+namespace C6Digital\PasswordlessLogin\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \RyanChandler\PasswordlessLogin\PasswordlessLogin
+ * @method static string generateLoginLink(\App\Models\User $user)
+ *
+ * @see \C6Digital\PasswordlessLogin\PasswordlessLogin
  */
 class PasswordlessLogin extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \RyanChandler\PasswordlessLogin\PasswordlessLogin::class;
+        return \C6Digital\PasswordlessLogin\PasswordlessLogin::class;
     }
 }
