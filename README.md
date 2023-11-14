@@ -38,6 +38,27 @@ public function panel(Panel $panel): Panel
 
 This will automatically register the new login page, overwriting the one provided by Filament. It also registers the necessary routes to authenticate users using a magic login link.
 
+### Action
+
+This package also provides an `Action` that can be used inside of Filament tables.
+
+```php
+use C6Digital\PasswordlessLogin\Actions\LoginLinkAction;
+
+$table
+    ->actions([
+        LoginLinkAction::make(),
+    ]);
+```
+
+### Command
+
+If you need to generate a login link without accessing the site, you can use the `passwordless:link` command.
+
+```sh
+php artisan passwordless:link {email}
+```
+
 ## Testing
 
 ```bash
