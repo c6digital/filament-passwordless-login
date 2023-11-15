@@ -12,7 +12,7 @@ This package provides a new Login component that replaces the traditional email 
 You can install the package via composer:
 
 ```bash
-composer require ryangjchandler/filament-passwordless-login
+composer require c6digital/filament-passwordless-login
 ```
 
 Optionally, you can publish the views using
