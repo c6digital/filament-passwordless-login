@@ -9,7 +9,6 @@ use Filament\Facades\Filament;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Filament\Notifications\Notification;
 use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Pages\SimplePage;
 use Illuminate\Support\Facades\Mail;
@@ -44,11 +43,7 @@ class Login extends SimplePage
             Mail::to($data['email'])->queue(new LoginLink($user));
         }
 
-        Notification::make()
-            ->title('Sent!')
-            ->body('If you have an account, you will receive an email with a link to login shortly.')
-            ->success()
-            ->send();
+        $this->sent = true;
 
         $this->reset('email');
     }
