@@ -2,6 +2,11 @@
 
 All notable changes to `filament-passwordless-login` will be documented in this file.
 
+## v1.0.0 - 2025-09-27
+
+* Add support for Laravel 12
+* Drop support for Laravel 10
+
 ## v0.3.0 - 2024-03-20
 
 * Add support for optional password authentication in `local` environments.
