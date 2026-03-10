@@ -17,8 +17,7 @@ class LoginLink extends Mailable
 
     public function __construct(
         public User $user,
-    ) {
-    }
+    ) {}
 
     public function envelope()
     {

@@ -59,7 +59,7 @@ class PasswordlessLoginServiceProvider extends PackageServiceProvider
         FilamentIcon::register($this->getIcons());
 
         // Testing
-        Testable::mixin(new TestsPasswordlessLogin());
+        Testable::mixin(new TestsPasswordlessLogin);
     }
 
     protected function getAssetPackageName(): ?string
