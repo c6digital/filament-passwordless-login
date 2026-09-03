@@ -3,7 +3,7 @@
 namespace C6Digital\PasswordlessLogin\Http\Controllers;
 
 use App\Models\User;
-use Filament\Http\Responses\Auth\Contracts\LoginResponse;
+use Filament\Auth\Http\Responses\Contracts\LoginResponse;
 use Illuminate\Support\Facades\Auth;
 
 class LoginLinkController

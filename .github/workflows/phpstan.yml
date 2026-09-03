@@ -5,22 +5,29 @@ on:
     paths:
       - '**.php'
       - 'phpstan.neon.dist'
+  workflow_dispatch:
 
 jobs:
   phpstan:
-    name: phpstan
+    name: phpstan - F${{ matrix.filament }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        filament: [5.*, 4.*]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
           coverage: none
 
       - name: Install composer dependencies
-        uses: ramsey/composer-install@v3
+        run: |
+          composer require "filament/filament:${{ matrix.filament }}" --no-interaction --no-update
+          composer update --prefer-dist --no-interaction
 
       - name: Run PHPStan
         run: ./vendor/bin/phpstan --error-format=github

@@ -7,6 +7,13 @@
 
 This package provides a new Login component that replaces the traditional email and password form with a simple passwordless login form.
 
+## Version compatibility
+
+| Package | Filament | Laravel          | PHP    |
+|---------|----------|------------------|--------|
+| `^2.0`  | 4.x, 5.x | 11.x, 12.x, 13.x | 8.2+   |
+| `^1.0`  | 3.x      | 11.x, 12.x       | 8.1+   |
+
 ## Installation
 
 You can install the package via composer:
@@ -57,7 +64,7 @@ This package also provides an `Action` that can be used inside of Filament table
 use C6Digital\PasswordlessLogin\Actions\LoginLinkAction;
 
 $table
-    ->actions([
+    ->recordActions([
         LoginLinkAction::make(),
     ]);
 ```

@@ -8,59 +8,74 @@ use C6Digital\PasswordlessLogin\PasswordlessLoginPlugin;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use DanHarrin\LivewireRateLimiting\WithRateLimiting;
 use Filament\Actions\Action;
+use Filament\Auth\Http\Responses\Contracts\LoginResponse;
 use Filament\Facades\Filament;
-use Filament\Forms\Components\Component;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Notifications\Notification;
 use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Pages\SimplePage;
+use Filament\Schemas\Components\Actions as ActionsComponent;
+use Filament\Schemas\Components\Component;
+use Filament\Schemas\Components\EmbeddedSchema;
+use Filament\Schemas\Components\Form;
+use Filament\Schemas\Concerns\RestrictsFileUploadsToSchemaComponents;
+use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * @property-read Schema $form
+ */
 class Login extends SimplePage
 {
     use InteractsWithFormActions;
+
+    // This page is reachable unauthenticated, so — as Filament does on its own auth
+    // pages — refuse temporary file uploads for anything that is not a file upload
+    // component in one of this page's schemas.
+    use RestrictsFileUploadsToSchemaComponents;
     use WithRateLimiting;
 
-    protected static string $view = 'filament-passwordless-login::pages.login';
+    protected string $view = 'filament-passwordless-login::pages.login';
 
-    public $email;
+    /**
+     * @var array<string, mixed> | null
+     */
+    public ?array $data = [];
 
-    public $password;
+    public bool $sent = false;
 
-    public $sent = false;
-
-    public function mount()
+    public function mount(): void
     {
         if (Filament::auth()->check()) {
-            return redirect()->intended(Filament::getUrl());
+            redirect()->intended(Filament::getUrl());
+
+            return;
         }
 
         $this->form->fill();
     }
 
-    public function authenticate()
+    public function authenticate(): ?LoginResponse
     {
         try {
             $this->rateLimit(5);
         } catch (TooManyRequestsException $e) {
             Notification::make()
-                ->title(__('filament-panels::pages/auth/login.notifications.throttled.title', [
+                ->title(__('filament-panels::auth/pages/login.notifications.throttled.title', [
                     'seconds' => $e->secondsUntilAvailable,
                     'minutes' => ceil($e->secondsUntilAvailable / 60),
                 ]))
-                ->body(array_key_exists('body', __('filament-panels::pages/auth/login.notifications.throttled') ?: []) ? __('filament-panels::pages/auth/login.notifications.throttled.body', [
+                ->body(array_key_exists('body', __('filament-panels::auth/pages/login.notifications.throttled') ?: []) ? __('filament-panels::auth/pages/login.notifications.throttled.body', [
                     'seconds' => $e->secondsUntilAvailable,
                     'minutes' => ceil($e->secondsUntilAvailable / 60),
                 ]) : null)
                 ->danger()
                 ->send();
 
-            return;
+            return null;
         }
 
         $data = $this->form->getState();
@@ -79,13 +94,18 @@ class Login extends SimplePage
 
         $this->sent = true;
 
-        $this->reset('email');
+        $this->data['email'] = null;
+
+        return null;
     }
 
-    protected function authenticateWithPassword(array $data)
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    protected function authenticateWithPassword(array $data): ?LoginResponse
     {
         if (! PasswordlessLoginPlugin::get()->allowsPasswordInLocalEnvironment()) {
-            return;
+            return null;
         }
 
         if (! Filament::auth()->attempt($this->getCredentialsFromFormData($data))) {
@@ -96,7 +116,7 @@ class Login extends SimplePage
 
         if (
             ($user instanceof FilamentUser) &&
-            (! $user->canAccessPanel(Filament::getCurrentPanel()))
+            (! $user->canAccessPanel(Filament::getCurrentOrDefaultPanel()))
         ) {
             Filament::auth()->logout();
 
@@ -111,23 +131,50 @@ class Login extends SimplePage
     protected function throwFailureValidationException(): never
     {
         throw ValidationException::withMessages([
-            'email' => __('filament-panels::pages/auth/login.messages.failed'),
+            'data.email' => __('filament-panels::auth/pages/login.messages.failed'),
         ]);
     }
 
-    public function form(Form $form): Form
+    public function defaultForm(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->statePath('data');
+    }
+
+    public function form(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
                 $this->getEmailFormComponent(),
                 $this->getPasswordFormComponent(),
+            ]);
+    }
+
+    public function content(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                $this->getFormContentComponent(),
+            ]);
+    }
+
+    public function getFormContentComponent(): Component
+    {
+        return Form::make([EmbeddedSchema::make('form')])
+            ->id('form')
+            ->livewireSubmitHandler('authenticate')
+            ->footer([
+                ActionsComponent::make($this->getCachedFormActions())
+                    ->alignment($this->getFormActionsAlignment())
+                    ->fullWidth($this->hasFullWidthFormActions())
+                    ->key('form-actions'),
             ]);
     }
 
     protected function getEmailFormComponent(): Component
     {
         return TextInput::make('email')
-            ->label(__('filament-panels::pages/auth/login.form.email.label'))
+            ->label(__('filament-panels::auth/pages/login.form.email.label'))
             ->email()
             ->required()
             ->autocomplete()
@@ -138,8 +185,8 @@ class Login extends SimplePage
     protected function getPasswordFormComponent(): Component
     {
         return TextInput::make('password')
-            ->visible(fn () => PasswordlessLoginPlugin::get()->allowsPasswordInLocalEnvironment())
-            ->label(__('filament-panels::pages/auth/login.form.password.label'))
+            ->visible(fn (): bool => PasswordlessLoginPlugin::get()->allowsPasswordInLocalEnvironment())
+            ->label(__('filament-panels::auth/pages/login.form.password.label'))
             ->helperText('You are currently in a local environment, so you can use a password instead of a login link.')
             ->password()
             ->revealable(filament()->arePasswordsRevealable())
@@ -147,6 +194,9 @@ class Login extends SimplePage
             ->extraInputAttributes(['tabindex' => 2]);
     }
 
+    /**
+     * @return array<Action>
+     */
     protected function getFormActions(): array
     {
         return [
@@ -157,7 +207,7 @@ class Login extends SimplePage
     protected function getAuthenticateFormAction(): Action
     {
         return Action::make('authenticate')
-            ->label(__('filament-panels::pages/auth/login.form.actions.authenticate.label'))
+            ->label(__('filament-panels::auth/pages/login.form.actions.authenticate.label'))
             ->submit('authenticate');
     }
 
@@ -166,6 +216,10 @@ class Login extends SimplePage
         return true;
     }
 
+    /**
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
+     */
     protected function getCredentialsFromFormData(array $data): array
     {
         return [
@@ -174,11 +228,14 @@ class Login extends SimplePage
         ];
     }
 
-    protected function messages()
+    /**
+     * @return array<string, string>
+     */
+    protected function messages(): array
     {
         return [
-            'email.required' => 'Please enter your email address.',
-            'email.email' => 'Please enter a valid email address.',
+            'data.email.required' => 'Please enter your email address.',
+            'data.email.email' => 'Please enter a valid email address.',
         ];
     }
 }
