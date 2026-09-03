@@ -4,9 +4,10 @@ namespace C6Digital\PasswordlessLogin\Actions;
 
 use App\Models\User;
 use C6Digital\PasswordlessLogin\PasswordlessLogin;
+use Filament\Actions\Action;
 use Filament\Forms\Components\TextInput;
 use Filament\Support\Enums\Alignment;
-use Filament\Tables\Actions\Action;
+use Filament\Support\Enums\Width;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Js;
 
@@ -24,8 +25,8 @@ class LoginLinkAction extends Action
         $this
             ->icon('heroicon-o-arrow-right-on-rectangle')
             ->color('info')
-            ->modalWidth('lg')
-            ->form([
+            ->modalWidth(Width::Large)
+            ->schema([
                 TextInput::make('link')
                     ->readOnly()
                     ->afterStateHydrated(function (TextInput $component, User $user, PasswordlessLogin $passwordlessLogin) {
