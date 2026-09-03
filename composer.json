@@ -47,7 +47,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "C6Digital\\PasswordlessLogin\\Tests\\": "tests/"
+            "C6Digital\\PasswordlessLogin\\Tests\\": "tests/",
+            "App\\": "tests/Fixtures/app/"
         }
     },
     "scripts": {
