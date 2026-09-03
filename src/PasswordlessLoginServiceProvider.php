@@ -4,11 +4,6 @@ namespace C6Digital\PasswordlessLogin;
 
 use C6Digital\PasswordlessLogin\Facades\PasswordlessLogin;
 use C6Digital\PasswordlessLogin\Testing\TestsPasswordlessLogin;
-use Filament\Support\Assets\AlpineComponent;
-use Filament\Support\Assets\Asset;
-use Filament\Support\Assets\Css;
-use Filament\Support\Assets\Js;
-use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
 use Livewire\Features\SupportTesting\Testable;
 use Spatie\LaravelPackageTools\Package;
@@ -44,39 +39,11 @@ class PasswordlessLoginServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        // Asset Registration
-        FilamentAsset::register(
-            $this->getAssets(),
-            $this->getAssetPackageName()
-        );
-
-        FilamentAsset::registerScriptData(
-            $this->getScriptData(),
-            $this->getAssetPackageName()
-        );
-
         // Icon Registration
         FilamentIcon::register($this->getIcons());
 
         // Testing
-        Testable::mixin(new TestsPasswordlessLogin());
-    }
-
-    protected function getAssetPackageName(): ?string
-    {
-        return 'ryangjchandler/filament-passwordless-login';
-    }
-
-    /**
-     * @return array<Asset>
-     */
-    protected function getAssets(): array
-    {
-        return [
-            // AlpineComponent::make('filament-passwordless-login', __DIR__ . '/../resources/dist/components/filament-passwordless-login.js'),
-            Css::make('filament-passwordless-login-styles', __DIR__ . '/../resources/dist/filament-passwordless-login.css'),
-            Js::make('filament-passwordless-login-scripts', __DIR__ . '/../resources/dist/filament-passwordless-login.js'),
-        ];
+        Testable::mixin(new TestsPasswordlessLogin);
     }
 
     /**
@@ -99,14 +66,6 @@ class PasswordlessLoginServiceProvider extends PackageServiceProvider
      * @return array<string>
      */
     protected function getRoutes(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    protected function getScriptData(): array
     {
         return [];
     }
